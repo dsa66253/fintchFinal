@@ -1,0 +1,34 @@
+searchSpace:
+  encoder_drop:
+    _type: uniform
+    _value: [0.5, 1]
+  decoder_drop:
+    _type: uniform
+    _value: [0.5, 1]
+  warmup:
+    _type: uniform
+    _value: [0.1, 0.3]
+  lr:
+    _type: choice
+    _value: [1e-4, 3e-4, 5e-4, 1e-5, 4e-5, 7e-5, 5e-3]
+  batch_size:
+    _type: choice
+    _value: [64, 128, 256]
+  n_layers:
+    _type: choice
+    _value: [1, 2]
+  n_hidden:
+    _type: choice
+    _value: [50, 100, 150]
+trainingService:
+  platform: local
+  use_active_gpu: True
+  maxTrialNumberPerGpu: 3
+trialCodeDirectory: .
+trialCommand: python3 train_gru_encoder.py
+trialConcurrency: 1
+trialGpuNumber: 1
+tuner:
+  name: TPE
+  classArgs:
+    optimize_mode: maximize
